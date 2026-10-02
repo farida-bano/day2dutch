@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dutch Day 2 – Greetings & Introduction</title>
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#f3f6f9; --card:#ffffff; --ink:#14243a; --muted:#5b6b80;
+  --orange:#c2410c; --orange-soft:#fde8dc; --blue:#1f4e9c; --blue-soft:#e3ecf9; --line:#d6dfea;
+  --ok:#157f3b; --ok-soft:#dcf5e5; --bad:#b42318; --bad-soft:#fde4e1;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1824; --card:#18263a; --ink:#eaf0f8; --muted:#9aabc2;
+    --orange:#ff8a4c; --orange-soft:#3a2418; --blue:#8db4f5; --blue-soft:#1d3050; --line:#2b3d57;
+    --ok:#6fdc97; --ok-soft:#173a26; --bad:#ff9a8f; --bad-soft:#40201d;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1824; --card:#18263a; --ink:#eaf0f8; --muted:#9aabc2;
+  --orange:#ff8a4c; --orange-soft:#3a2418; --blue:#8db4f5; --blue-soft:#1d3050; --line:#2b3d57;
+  --ok:#6fdc97; --ok-soft:#173a26; --bad:#ff9a8f; --bad-soft:#40201d;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Trebuchet MS","Segoe UI",Roboto,Arial,sans-serif;line-height:1.45}
+.wrap{max-width:900px;margin:0 auto;padding:20px 14px 50px}
+.flag{height:8px;border-radius:4px;background:linear-gradient(to bottom,#ae1c28 33%,#fff 33% 66%,#21468b 66%);margin-bottom:16px;border:1px solid var(--line)}
+h1{font-size:clamp(1.6rem,5vw,2.3rem);margin:0 0 4px;letter-spacing:-.5px}
+h2{font-size:1.2rem;margin:22px 0 8px}
+.sub{color:var(--muted);margin:0 0 14px}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.tab,.btn{font:inherit;border:1.5px solid var(--line);background:var(--card);color:var(--ink);padding:8px 14px;border-radius:999px;cursor:pointer}
+.tab[aria-selected="true"]{background:var(--blue);border-color:var(--blue);color:#fff}
+.btn.primary{background:var(--orange);border-color:var(--orange);color:#fff}
+:root[data-theme="dark"] .btn.primary{color:#1a1208}
+button:focus-visible{outline:3px solid var(--orange);outline-offset:2px}
+.panel{display:none}.panel.on{display:block}
+.box{background:var(--card);border:1.5px solid var(--line);border-radius:16px;padding:12px 14px;overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:600px;font-size:.92rem}
+th,td{text-align:left;padding:8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--muted);font-weight:600}
+td.nl{font-weight:800;color:var(--orange)}
+td.pr{color:var(--blue);font-style:italic}
+.sb{font:inherit;border:1px solid var(--line);background:transparent;color:var(--ink);border-radius:8px;padding:3px 8px;cursor:pointer}
+.sb:hover{background:var(--blue-soft)}
+.formula{background:var(--blue-soft);border-radius:12px;padding:10px 14px;margin:8px 0;font-family:ui-monospace,Menlo,Consolas,monospace}
+.formula b{color:var(--orange)}
+.note{background:var(--orange-soft);border-radius:12px;padding:10px 14px;margin:10px 0;font-size:.93rem}
+.flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:8px 0}
+.flow div{background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:8px;text-align:center;font-size:.9rem}
+.flow b{display:block;color:var(--orange);font-size:1rem}
+/* flashcards */
+.fc{max-width:420px;margin:0 auto;text-align:center}
+.card{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:30px 16px;min-height:220px;display:flex;flex-direction:column;justify-content:center;gap:8px;cursor:pointer;width:100%;font:inherit;color:inherit}
+.card .big{font-size:2rem;font-weight:800;color:var(--orange)}
+.card .pr{color:var(--blue);font-style:italic}
+.card .hint{color:var(--muted);font-size:.85rem}
+.ctrl{display:flex;gap:8px;justify-content:center;margin-top:12px;flex-wrap:wrap}
+.count{color:var(--muted);font-size:.9rem;margin-bottom:8px}
+/* quiz */
+.q{font-size:1.1rem;font-weight:700;margin-bottom:10px}
+.opts{display:grid;gap:8px}
+.opt{font:inherit;text-align:left;border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:10px 12px;cursor:pointer}
+.opt.ok{background:var(--ok-soft);border-color:var(--ok)}
+.opt.bad{background:var(--bad-soft);border-color:var(--bad)}
+.fb{margin-top:10px;font-size:.93rem;min-height:1.4em}
+.score{font-size:1.3rem;font-weight:800;text-align:center;padding:16px}
+/* builder */
+.target{font-size:1.05rem;font-weight:700;margin-bottom:10px}
+.slot{min-height:54px;border:2px dashed var(--line);border-radius:12px;padding:8px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.chip{font:inherit;font-weight:700;border:1.5px solid var(--orange);background:var(--orange-soft);color:var(--orange);border-radius:10px;padding:6px 12px;cursor:pointer}
+.chip.used{opacity:.3}
+.msg{font-weight:700;min-height:1.5em}
+.prog{height:8px;background:var(--line);border-radius:6px;overflow:hidden;margin:6px 0 12px}
+.prog i{display:block;height:100%;background:var(--blue);width:0;transition:width .2s}
+.warn{font-size:.85rem;color:var(--muted);margin-top:6px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="flag" aria-hidden="true"></div>
+  <h1>Day 2: Greetings &amp; Introduction 👋🇳🇱</h1>
+  <p class="sub">Level A1 • Salaam, shukriya, aur apna introduction</p>
+  <p class="warn" id="vmsg"></p>
+
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" data-t="words" aria-selected="true">📚 Words</button>
+    <button class="tab" role="tab" data-t="cards" aria-selected="false">🃏 Flashcards</button>
+    <button class="tab" role="tab" data-t="quiz" aria-selected="false">🎯 Quiz</button>
+    <button class="tab" role="tab" data-t="build" aria-selected="false">🧩 Sentence Builder</button>
+  </div>
+
+  <!-- WORDS -->
+  <section class="panel on" id="words">
+    <h2>1. Greetings (Salaam &amp; Alvida)</h2>
+    <div class="box"><table><thead><tr><th>Dutch</th><th>Pronunciation</th><th>English</th><th>Roman Urdu</th><th>Example</th><th>Kab use hota hai</th><th>🔊</th></tr></thead><tbody id="t1"></tbody></table></div>
+
+    <h2>2. Shukriya &amp; Politeness</h2>
+    <div class="box"><table><thead><tr><th>Dutch</th><th>Pronunciation</th><th>English</th><th>Roman Urdu</th><th>Example</th><th>Kab use hota hai</th><th>🔊</th></tr></thead><tbody id="t2"></tbody></table></div>
+
+    <h2>3. Hal Pochna &amp; Introduction</h2>
+    <div class="box"><table><thead><tr><th>Dutch</th><th>Pronunciation</th><th>English</th><th>Roman Urdu</th><th>Example</th><th>Kab use hota hai</th><th>🔊</th></tr></thead><tbody id="t3"></tbody></table></div>
+
+    <h2>🧩 Sentence formula</h2>
+    <div class="formula"><b>Ik</b> + heet + [naam] &nbsp;→ Ik heet Sara.<br><b>Ik</b> + kom + uit + [mulk] &nbsp;→ Ik kom uit Pakistan.</div>
+    <p>Ik = main &nbsp;|&nbsp; heet = naam hai &nbsp;|&nbsp; kom uit = ...se aata/aati hoon</p>
+
+    <h2>🕐 Time ke hisaab se greeting</h2>
+    <div class="flow">
+      <div>Subah<b>Goedemorgen</b></div>
+      <div>Dopahar<b>Goedemiddag</b></div>
+      <div>Shaam<b>Goedenavond</b></div>
+      <div>Kisi bhi waqt (dost)<b>Hallo</b></div>
+    </div>
+
+    <h2>🌷 Culture note (general guidance)</h2>
+    <div class="note"><b>je</b> = informal (dost, family, bachche). <b>u</b> = formal (bade, ajnabi, office).<br>
+    Aksar log milte waqt handshake karte hain. Kuch dost aur family mein gaal par 3 baar kiss (left-right-left) bhi hota hai. Yeh har shakhs aur family ka alag hota hai, is liye jo aap ko comfortable lage wohi karein. Muskura kar "Hallo" kehna hamesha theek hai.</div>
+
+    <h2>🎧 Voice se seekhein</h2>
+    <p>Forvo.com par word search karein (jaise <i>goedemorgen</i>), YouTube par <i>"Dutch greetings for beginners"</i> search karein, aur duolingo.com par Dutch course dekhein.</p>
+  </section>
+
+  <!-- FLASHCARDS -->
+  <section class="panel" id="cards">
+    <div class="fc">
+      <div class="count" id="fcCount"></div>
+      <button class="card" id="fcCard" aria-live="polite"></button>
+      <div class="ctrl">
+        <button class="btn" id="fcPrev">◀ Pichla</button>
+        <button class="btn" id="fcSay">🔊 Suniye</button>
+        <button class="btn primary" id="fcNext">Agla ▶</button>
+      </div>
+      <p class="warn">Card par tap karein, jawab dekhne ke liye. Pehle khud bolne ki koshish karein.</p>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section class="panel" id="quiz">
+    <div class="box" id="quizBox"></div>
+  </section>
+
+  <!-- BUILDER -->
+  <section class="panel" id="build">
+    <div class="box">
+      <div class="count" id="bCount"></div>
+      <div class="prog"><i id="bProg"></i></div>
+      <div class="target" id="bTarget"></div>
+      <div class="slot" id="bSlot" aria-label="Aap ka jawab"></div>
+      <div class="chips" id="bChips"></div>
+      <div class="ctrl" style="justify-content:flex-start">
+        <button class="btn" id="bClear">↺ Dobara</button>
+        <button class="btn primary" id="bCheck">✔ Check</button>
+        <button class="btn" id="bNext">Agla ▶</button>
+      </div>
+      <div class="msg" id="bMsg"></div>
+    </div>
+  </section>
+</div>
+
+<script>
+const G=[
+["Hallo","HAH-loh","Hello","Salaam / Hello","Hallo!","Kisi bhi waqt, normal baat-cheet","Hallo"],
+["Goedemorgen","KHOO-duh-MOR-khen","Good morning","Subah bakhair","Goedemorgen, mevrouw.","Subah se dopahar tak","Goedemorgen"],
+["Goedemiddag","KHOO-duh-MID-dakh","Good afternoon","Dopahar bakhair","Goedemiddag!","Dopahar se shaam tak","Goedemiddag"],
+["Goedenavond","KHOO-duh-NAH-vont","Good evening","Shaam bakhair","Goedenavond!","Shaam ko milte waqt","Goedenavond"],
+["Tot ziens","tot ZEENS","Goodbye","Allah hafiz","Tot ziens!","Dukaan, office, formal jagah","Tot ziens"],
+["Doei","doo-ee","Bye","Chalo, phir milte hain","Doei!","Dost, family, neighbours","Doei"]];
+const P=[
+["Dank je wel","dank yuh VEL","Thank you","Shukriya","Dank je wel!","Dost, husband, neighbours","Dank je wel"],
+["Dank u wel","dank ue VEL","Thank you (formal)","Bohat shukriya","Dank u wel, meneer.","Bade, ajnabi, office","Dank u wel"],
+["Alsjeblieft","AL-shuh-bleeft","Please / Here you are","Meharbani / Yeh lijiye","Alsjeblieft!","Cheez dete ya request karte waqt","Alsjeblieft"],
+["Sorry","SOR-ree","Sorry","Maaf kijiye","Sorry!","Ghalti ya takrane par","Sorry"]];
+const I=[
+["Hoe gaat het?","hoo KHAAT het","How are you?","Aap kaisi hain?","Hoe gaat het met je?","Hal poochne ke liye","Hoe gaat het?"],
+["Goed, dank je.","khoot dank yuh","Good, thanks.","Theek hoon, shukriya.","Het gaat goed, dank je.","Hal ka jawab","Goed, dank je."],
+["Ik heet...","ik HAYT","My name is...","Mera naam ... hai","Ik heet Sara.","Apna naam batate waqt","Ik heet Sara"],
+["Ik kom uit Pakistan.","ik kom out PAH-kis-tahn","I come from Pakistan.","Main Pakistan se hoon.","Ik kom uit Pakistan.","Apna mulk batate waqt","Ik kom uit Pakistan"],
+["Aangenaam!","AHN-khuh-naam","Nice to meet you!","Aap se mil kar khushi hui","Aangenaam, ik heet Sara.","Pehli baar milne par","Aangenaam"]];
+const ALL=[...G,...P,...I];
+
+let voices=[];
+function loadV(){voices=speechSynthesis.getVoices();
+  const has=voices.some(v=>v.lang.toLowerCase().startsWith("nl"));
+  document.getElementById("vmsg").textContent=has?"":"⚠️ Is device par Dutch voice nahi mili. Native awaaz ke liye forvo.com par word search karein.";}
+if("speechSynthesis" in window){loadV();speechSynthesis.onvoiceschanged=loadV}
+function say(t){
+  if(!("speechSynthesis" in window))return;
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(t);u.lang="nl-NL";u.rate=.8;
+  const v=voices.find(v=>v.lang.toLowerCase().replace("_","-").startsWith("nl"));
+  if(v)u.voice=v;speechSynthesis.speak(u);
+}
+function fill(id,rows){
+  const tb=document.getElementById(id);
+  rows.forEach(r=>{
+    const tr=document.createElement("tr");
+    tr.innerHTML=`<td class="nl">${r[0]}</td><td class="pr">${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td><td>${r[4]}</td><td>${r[5]}</td><td><button class="sb" aria-label="Suniye ${r[0]}">🔊</button></td>`;
+    tr.querySelector("button").onclick=()=>say(r[6]);
+    tb.appendChild(tr);
+  });
+}
+fill("t1",G);fill("t2",P);fill("t3",I);
+
+// tabs
+const tabs=[...document.querySelectorAll(".tab")];
+tabs.forEach(t=>t.onclick=()=>{
+  tabs.forEach(x=>x.setAttribute("aria-selected",x===t));
+  document.querySelectorAll(".panel").forEach(p=>p.classList.toggle("on",p.id===t.dataset.t));
+});
+
+// flashcards
+let fi=0,flipped=false;
+const fcCard=document.getElementById("fcCard");
+function showFC(){
+  const r=ALL[fi];
+  document.getElementById("fcCount").textContent=`Card ${fi+1} / ${ALL.length}`;
+  if(!flipped){
+    fcCard.innerHTML=`<div class="hint">Roman Urdu</div><div class="big" style="color:var(--ink)">${r[3]}</div><div class="hint">Dutch kya hai? Tap karein 👆</div>`;
+  }else{
+    fcCard.innerHTML=`<div class="big">${r[0]}</div><div class="pr">${r[1]}</div><div>${r[2]}</div><div class="hint">${r[4]}</div>`;
+  }
+}
+fcCard.onclick=()=>{flipped=!flipped;showFC();if(flipped)say(ALL[fi][6])};
+document.getElementById("fcNext").onclick=()=>{fi=(fi+1)%ALL.length;flipped=false;showFC()};
+document.getElementById("fcPrev").onclick=()=>{fi=(fi-1+ALL.length)%ALL.length;flipped=false;showFC()};
+document.getElementById("fcSay").onclick=()=>say(ALL[fi][6]);
+showFC();
+
+// quiz
+const Q=[
+["Subah ko 'Good morning' Dutch mein?",["Goedemorgen","Goedenavond","Tot ziens","Doei"],0,"Goedemorgen = Subah bakhair."],
+["'Shukriya' (dost ya husband ke liye)?",["Alsjeblieft","Dank je wel","Sorry","Hallo"],1,"Dank je wel = Thank you (informal). Bade ke liye: Dank u wel."],
+["'Mera naam Sara hai' Dutch mein?",["Ik kom Sara","Hoe gaat het Sara","Ik heet Sara","Tot ziens Sara"],2,"Formula: Ik + heet + naam."],
+["'Main Pakistan se hoon'?",["Ik kom uit Pakistan","Ik heet Pakistan","Aangenaam Pakistan","Goed, dank je"],0,"Ik kom uit + mulk."],
+["'Hoe gaat het?' ka matlab?",["Aap kahan se hain?","Aap ka naam kya hai?","Aap kaisi hain?","Allah hafiz"],2,"Hoe gaat het? = How are you?"],
+["Dukaan se nikalte waqt formal 'Allah hafiz'?",["Aangenaam","Goedenavond","Tot ziens","Alsjeblieft"],2,"Tot ziens = Goodbye. Doei = informal bye."],
+["Shaam ko kaunsa greeting?",["Goedemorgen","Goedemiddag","Goedenavond","Doei"],2,"Goedenavond = Good evening."],
+["Kisi bade ko formal 'thank you' kehna ho?",["Dank je wel","Dank u wel","Doei","Sorry"],1,"u = formal, je = informal."]
+];
+let qi=0,qs=0,qdone=false;
+const qb=document.getElementById("quizBox");
+function showQ(){
+  if(qi>=Q.length){
+    const msg=qs>=7?"Shabash! 🌟":qs>=5?"Achha hai, thodi aur practice 👍":"Words dobara dekhein, phir try karein 💪";
+    qb.innerHTML=`<div class="score">Score: ${qs} / ${Q.length}<br><span style="font-size:1rem;font-weight:600">${msg}</span></div><div class="ctrl"><button class="btn primary" id="qr">↺ Dobara</button></div>`;
+    document.getElementById("qr").onclick=()=>{qi=0;qs=0;showQ()};
+    return;
+  }
+  qdone=false;
+  const q=Q[qi];
+  qb.innerHTML=`<div class="count">Sawal ${qi+1} / ${Q.length}</div><div class="q">${q[0]}</div><div class="opts"></div><div class="fb" id="qfb"></div><div class="ctrl" style="justify-content:flex-start"><button class="btn primary" id="qn" style="display:none">Agla ▶</button></div>`;
+  const o=qb.querySelector(".opts");
+  q[1].forEach((t,i)=>{
+    const b=document.createElement("button");b.className="opt";b.textContent=t;
+    b.onclick=()=>{
+      if(qdone)return;qdone=true;
+      const ok=i===q[2];if(ok)qs++;
+      b.classList.add(ok?"ok":"bad");
+      if(!ok)o.children[q[2]].classList.add("ok");
+      document.getElementById("qfb").textContent=(ok?"✅ Sahi! ":"❌ Ghalat. ")+q[3];
+      const n=document.getElementById("qn");n.style.display="inline-block";
+      n.textContent=qi===Q.length-1?"Score dekhein":"Agla ▶";
+      n.onclick=()=>{qi++;showQ()};
+      say(q[1][q[2]]);
+    };
+    o.appendChild(b);
+  });
+}
+showQ();
+
+// sentence builder
+const B=[
+["Subah ka salaam karein","Goedemorgen"],
+["Apna naam batayein (Sara)","Ik heet Sara"],
+["Kahein: main Pakistan se hoon","Ik kom uit Pakistan"],
+["Kahein: aap se mil kar khushi hui","Aangenaam"],
+["Hal poochein: aap kaisi hain?","Hoe gaat het"],
+["Shukriya kahein (dost ko)","Dank je wel"]
+];
+let bi=0,sel=[];
+function shuffle(a){a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function showB(){
+  sel=[];
+  const [prompt,ans]=B[bi];
+  document.getElementById("bCount").textContent=`Sentence ${bi+1} / ${B.length}`;
+  document.getElementById("bProg").style.width=((bi)/B.length*100)+"%";
+  document.getElementById("bTarget").textContent=prompt;
+  document.getElementById("bMsg").textContent="";
+  const words=shuffle(ans.split(" "));
+  const chips=document.getElementById("bChips");chips.innerHTML="";
+  words.forEach(w=>{
+    const c=document.createElement("button");c.className="chip";c.textContent=w;
+    c.onclick=()=>{if(c.classList.contains("used"))return;c.classList.add("used");sel.push({w,c});drawSlot()};
+    chips.appendChild(c);
+  });
+  drawSlot();
+}
+function drawSlot(){
+  const s=document.getElementById("bSlot");s.innerHTML="";
+  sel.forEach((x,i)=>{
+    const c=document.createElement("button");c.className="chip";c.textContent=x.w;
+    c.onclick=()=>{x.c.classList.remove("used");sel.splice(i,1);drawSlot()};
+    s.appendChild(c);
+  });
+}
+document.getElementById("bClear").onclick=showB;
+document.getElementById("bCheck").onclick=()=>{
+  const got=sel.map(x=>x.w).join(" ");
+  const m=document.getElementById("bMsg");
+  if(got===B[bi][1]){m.style.color="var(--ok)";m.textContent="✅ Bilkul sahi! "+B[bi][1];say(B[bi][1])}
+  else{m.style.color="var(--bad)";m.textContent="❌ Dobara koshish karein. Hint: Ik + heet + naam, ya Ik + kom + uit + mulk."}
+};
+document.getElementById("bNext").onclick=()=>{bi=(bi+1)%B.length;showB()};
+showB();
+</script>
+</body>
+</html>
